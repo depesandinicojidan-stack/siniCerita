@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>siniCerita – Pengaduan dan Konsultasi Awal Hukum</title>
+<meta name="description" content="Sampaikan permasalahan hukum Anda dengan aman dan mudah. Pendamping hukum: Ferdy Hamzah Supit, S.H., M.H.">
+<style>
+:root{--n:#0b1f3a;--n2:#17365f;--g:#b8923a;--bg:#f6f4ee;--t:#1c2733}
+*{box-sizing:border-box}body{margin:0;font:18px/1.7 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--t);background:var(--bg)}
+h1,h2,h3,.logo{font-family:Georgia,"Times New Roman",serif;color:var(--n);line-height:1.25}h2{margin-top:1.6em}
+header{background:var(--n);position:sticky;top:0;z-index:5}.bar{max-width:1000px;margin:auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;padding:10px 16px}
+.logo{font-size:26px;font-weight:700;color:#fff;text-decoration:none}.logo b{color:var(--g)}nav a{color:#fff;text-decoration:none;margin-left:16px;font-size:16px}
+main{max-width:1000px;margin:auto;padding:20px 16px 90px}a{color:var(--n2)}
+.btn{display:inline-block;margin:6px 6px 6px 0;padding:15px 24px;border-radius:12px;font:700 18px inherit;font-family:inherit;text-decoration:none;border:2px solid var(--g);background:var(--g);color:var(--n);cursor:pointer}
+.btn.o{background:transparent;color:#fff}.btn.wa{background:#1b7f4a;border-color:#1b7f4a;color:#fff}.btn.d{background:var(--n);border-color:var(--n);color:#fff}.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid var(--g);outline-offset:2px}
+.hero{background:linear-gradient(135deg,var(--n),var(--n2));color:#fff;border-radius:20px;padding:38px 22px}.hero h1{color:#fff;font-size:clamp(40px,9vw,68px);margin:0 0 8px}.hero h1 span{color:var(--g)}.hero p{max-width:640px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}.card{display:block;background:#fff;border:1px solid #ded9c9;border-radius:12px;padding:18px;color:inherit;text-decoration:none}a.card:hover{border-color:var(--g)}.card h3{margin:6px 0}.card p{margin:0;font-size:16px}
+.emg,.note{padding:12px 16px;border-radius:8px;font-size:16px;margin:18px 0}.emg{background:#fdecec;border-left:5px solid #b3261e}.note{background:#fff7e0;border-left:5px solid var(--g)}
+label{display:block;font-weight:600;margin-top:16px}input,select,textarea{width:100%;font:inherit;padding:13px;margin-top:6px;border:2px solid #c9c3b0;border-radius:10px;background:#fff}textarea{min-height:230px}
+label.ck{display:flex;gap:10px;font-weight:400;align-items:flex-start}label.ck input{width:26px;height:26px;margin:4px 0 0}
+.err{color:#b3261e;font-weight:600}.ok{background:#e7f5ec;border:2px solid #1b7f4a;padding:20px;border-radius:12px}.kode{font:700 32px Georgia,serif;color:var(--n);letter-spacing:2px}
+.tools{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:8px;margin:14px 0}@media(max-width:700px){.tools{grid-template-columns:1fr}}.tag{background:var(--n);color:#fff;border-radius:6px;padding:1px 8px;font-size:14px}
+details.card summary{cursor:pointer}.fab{position:fixed;right:14px;bottom:14px;background:#1b7f4a;color:#fff;padding:14px 20px;border-radius:30px;font-weight:700;text-decoration:none;box-shadow:0 3px 12px #0005;z-index:9}
+footer{background:var(--n);color:#cbd3df;padding:22px 16px 90px;font-size:15px;text-align:center}footer a{color:#fff}
+</style></head><body>
+<header><div class="bar"><a class="logo" href="#/">sini<b>Cerita</b></a><nav><a href="#/">Beranda</a><a href="#/kategori">Laporkan</a><a href="#/kategori/info">Informasi Hukum</a><a href="#/privasi">Privasi</a></nav></div></header>
+<main id="app"></main>
+<a id="fab" class="fab" target="_blank" rel="noopener">WhatsApp Pengacara</a>
+<footer>siniCerita · Ferdy Hamzah Supit, S.H., M.H.<br>Informasi di situs ini bersifat umum dan bukan pengganti konsultasi hukum langsung.<br><a href="#/admin">Masuk Pengacara</a></footer>
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.58.0/dist/umd/supabase.min.js"></script>
+<script>
+const WA='6282336795088',$=s=>document.querySelector(s),app=$('#app');
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let sb=null;try{if(CFG.url&&CFG.key&&window.supabase)sb=supabase.createClient(CFG.url,CFG.key)}catch(e){}
+const waUrl=(n,t)=>`https://wa.me/${n}?text=${encodeURIComponent(t)}`;
+const WAHI='Halo Pak Ferdy, saya ingin berkonsultasi melalui siniCerita.';
+$('#fab').href=waUrl(WA,WAHI);
+const EMG='<div class="emg"><b>Situasi darurat?</b> Jika Anda atau orang lain dalam bahaya, segera hubungi Polisi <b>110</b> atau layanan darurat <b>112</b>. Korban kekerasan perempuan dan anak dapat menghubungi <b>SAPA 129</b> (telepon 129 atau WhatsApp 08111-129-129). Jangan menunggu balasan situs ini.</div>';
+const DISC='<div class="note">Informasi ini bersifat umum dan <b>bukan pengganti konsultasi hukum langsung</b>. Peraturan dapat berubah; periksa teks resmi terbaru di <a target="_blank" rel="noopener" href="https://peraturan.bpk.go.id">peraturan.bpk.go.id</a> atau <a target="_blank" rel="noopener" href="https://jdihn.go.id">jdihn.go.id</a> (JDIH). Cerita seseorang tidak otomatis berarti pihak lain bersalah; pembuktian dilakukan melalui proses hukum.</div>';
+const K=[
+{id:'kdrt',ic:'🏠',t:'Kekerasan Dalam Rumah Tangga (KDRT)',d:'Kekerasan fisik, psikis, seksual, atau penelantaran dalam rumah tangga.',
+p:'KDRT adalah perbuatan terhadap seseorang, terutama perempuan, yang menimbulkan kesengsaraan atau penderitaan fisik, seksual, psikologis, dan/atau penelantaran rumah tangga, termasuk ancaman dan pemaksaan dalam lingkup rumah tangga (UU 23/2004 Pasal 1 angka 1).',
+b:['Kekerasan fisik (memukul, menendang, melukai)','Kekerasan psikis (ancaman, hinaan terus-menerus, membuat takut)','Kekerasan seksual (pemaksaan hubungan seksual)','Penelantaran rumah tangga (tidak memberi nafkah padahal wajib)'],
+h:['UU No. 23 Tahun 2004 tentang Penghapusan KDRT: Pasal 5 (bentuk kekerasan), Pasal 10 (hak korban), Pasal 44–49 (ketentuan pidana)','UU No. 12 Tahun 2022 tentang Tindak Pidana Kekerasan Seksual','UU No. 31 Tahun 2014 (perubahan UU 13/2006) tentang Perlindungan Saksi dan Korban'],
+hk:['Perlindungan dari keluarga, kepolisian, kejaksaan, pengadilan, advokat, atau lembaga sosial','Pelayanan kesehatan sesuai kebutuhan medis','Penanganan khusus terkait kerahasiaan korban','Pendampingan pekerja sosial dan bantuan hukum pada setiap tingkat pemeriksaan','Pelayanan bimbingan rohani'],
+l:['Utamakan keselamatan; pergi ke tempat aman bila perlu','Periksakan diri ke fasilitas kesehatan dan minta visum bila ada luka','Simpan bukti: foto luka, pesan, rekaman, rekam medis','Laporkan ke kepolisian (SPKT/Unit PPA) atau UPTD PPA setempat','Tanyakan perlindungan sementara dan bantuan hukum','Konsultasikan langkah lanjutan dengan pengacara'],
+lem:['Polisi 110 / SPKT terdekat','SAPA 129 Kementerian PPPA','UPTD PPA di kabupaten/kota Anda','Komnas Perempuan','LPSK (Lembaga Perlindungan Saksi dan Korban)']},
+{id:'keluarga',ic:'👪',t:'Perceraian dan Permasalahan Keluarga',d:'Perceraian, hak asuh anak, nafkah, dan harta bersama.',
+p:'Perceraian hanya dapat dilakukan di depan sidang pengadilan setelah pengadilan berusaha mendamaikan kedua pihak, dan harus ada alasan cukup bahwa suami istri tidak dapat hidup rukun (UU 1/1974 Pasal 39).',
+b:['Gugatan atau permohonan cerai','Hak asuh dan pemeliharaan anak','Nafkah anak dan nafkah setelah perceraian','Pembagian harta bersama'],
+h:['UU No. 1 Tahun 1974 tentang Perkawinan (diubah UU No. 16 Tahun 2019): Pasal 35 (harta bersama), Pasal 38–39 (putusnya perkawinan), Pasal 41 (akibat perceraian terhadap anak)','PP No. 9 Tahun 1975 Pasal 19 (alasan perceraian)','Kompilasi Hukum Islam (Inpres 1/1991) bagi yang beragama Islam'],
+hk:['Kedua orangtua tetap wajib memelihara dan mendidik anak; bila ada perselisihan, pengadilan yang memutuskan (Pasal 41 UU 1/1974)','Harta yang diperoleh selama perkawinan menjadi harta bersama (Pasal 35)','Bapak bertanggung jawab atas biaya pemeliharaan dan pendidikan anak (Pasal 41 huruf b)'],
+l:['Kumpulkan dokumen: buku/akta nikah, KK, akta kelahiran anak','Coba musyawarah atau mediasi keluarga bila aman','Konsultasikan hak dan pilihan Anda','Ajukan ke Pengadilan Agama (beragama Islam) atau Pengadilan Negeri (non-Islam)','Bila ada kekerasan, lihat kategori KDRT'],
+lem:['Pengadilan Agama / Pengadilan Negeri setempat','Posbakum (pos bantuan hukum) di pengadilan','KUA / BP4 untuk konseling','UPTD PPA setempat']},
+{id:'pidana',ic:'⚖️',t:'Hukum Pidana',d:'Penipuan, penggelapan, pengancaman, penganiayaan, dan perkara pidana lain.',
+p:'Hukum pidana mengatur perbuatan yang dilarang disertai sanksi, dan ditangani polisi, jaksa, dan pengadilan.',
+b:['Menjadi korban tindak pidana (penipuan, penggelapan, pencurian, penganiayaan)','Dipanggil sebagai saksi atau terlapor','Menghadapi proses penyidikan atau persidangan'],
+h:['UU No. 1 Tahun 2023 tentang KUHP (berlaku sejak 2 Januari 2026)','Hukum acara pidana (KUHAP): periksa versi terbaru yang berlaku di JDIH','UU No. 48 Tahun 2009 tentang Kekuasaan Kehakiman, Pasal 8 ayat (1): praduga tak bersalah'],
+hk:['Pelapor berhak mendapat tanda bukti laporan dari kepolisian','Setiap orang yang diperiksa berhak didampingi advokat','Setiap orang dianggap tidak bersalah sampai ada putusan pengadilan yang berkekuatan hukum tetap'],
+l:['Catat kronologi: siapa, apa, kapan, di mana','Simpan bukti (pesan, bukti transfer, foto, saksi)','Laporkan ke SPKT kepolisian dan minta surat tanda terima laporan','Jangan menghilangkan atau merusak barang bukti','Mintalah pendampingan advokat sejak awal pemeriksaan'],
+lem:['Polisi 110 / SPKT terdekat','Kejaksaan setempat','LPSK','Posbakum dan LBH','Kompolnas / Ombudsman untuk keluhan layanan aparat']},
+{id:'perdata',ic:'📄',t:'Hukum Perdata',d:'Utang piutang, perjanjian, ganti rugi, dan sengketa antarpribadi.',
+p:'Hukum perdata mengatur hubungan hukum antarpribadi, misalnya perjanjian, utang piutang, dan ganti rugi.',
+b:['Utang piutang yang tidak dibayar','Perjanjian yang tidak dipenuhi (wanprestasi)','Kerugian akibat perbuatan melawan hukum'],
+h:['KUH Perdata Pasal 1320 (syarat sahnya perjanjian)','KUH Perdata Pasal 1243 (ganti rugi bila perjanjian tidak dipenuhi)','KUH Perdata Pasal 1365 (perbuatan melawan hukum)','Perma No. 1 Tahun 2016 tentang Prosedur Mediasi di Pengadilan','Perma No. 4 Tahun 2019 (gugatan sederhana)'],
+hk:['Hak menagih dan menuntut pemenuhan perjanjian','Hak menuntut ganti rugi atas kerugian','Hak menempuh mediasi atau gugatan ke pengadilan'],
+l:['Kumpulkan perjanjian, kuitansi, bukti transfer, percakapan','Sampaikan teguran tertulis (somasi) bila perlu','Coba penyelesaian secara musyawarah','Ajukan gugatan ke Pengadilan Negeri; perkara kecil dapat memakai gugatan sederhana'],
+lem:['Pengadilan Negeri setempat','Posbakum / LBH','Lembaga mediasi dan notaris']},
+{id:'tanah',ic:'🏡',t:'Sengketa Tanah dan Properti',d:'Batas tanah, sertifikat ganda, jual beli, dan penguasaan lahan.',
+p:'Sengketa tanah adalah perselisihan mengenai kepemilikan, batas, penguasaan, atau dokumen tanah dan bangunan.',
+b:['Sengketa batas atau penyerobotan tanah','Sertifikat ganda atau dokumen dipersoalkan','Masalah jual beli tanah dan akta','Penguasaan tanah oleh pihak lain'],
+h:['UU No. 5 Tahun 1960 tentang Peraturan Dasar Pokok-Pokok Agraria (UUPA)','PP No. 18 Tahun 2021 (hak atas tanah dan pendaftaran tanah); PP 24/1997 sepanjang masih berlaku','UU No. 2 Tahun 2012 tentang Pengadaan Tanah untuk Kepentingan Umum','Perma No. 1 Tahun 2016 (mediasi)'],
+hk:['Hak atas tanah yang sah dilindungi hukum','Hak meminta penyelesaian melalui BPN atau pengadilan','Hak atas ganti rugi yang layak bila tanah diambil untuk kepentingan umum'],
+l:['Kumpulkan sertifikat/girik/akta jual beli, PBB, dan peta bidang','Cek status tanah di Kantor Pertanahan (BPN)','Coba musyawarah dan mediasi','Ajukan pengaduan ke BPN atau gugatan ke Pengadilan Negeri','Hindari tindakan fisik di lokasi'],
+lem:['Kantor Pertanahan (BPN) setempat','Notaris / PPAT','Pengadilan Negeri','Pemerintah desa/kelurahan']},
+{id:'kerja',ic:'👷',t:'Ketenagakerjaan',d:'Upah, PHK, pesangon, dan hak pekerja.',
+p:'Hukum ketenagakerjaan mengatur hubungan antara pekerja dan pemberi kerja, termasuk upah, jam kerja, jaminan sosial, dan pemutusan hubungan kerja (PHK).',
+b:['Upah tidak dibayar atau di bawah ketentuan','PHK sepihak atau pesangon tidak dibayar','Status kerja kontrak (PKWT) atau alih daya','Hak BPJS dan cuti'],
+h:['UU No. 13 Tahun 2003 tentang Ketenagakerjaan, sebagaimana diubah dengan UU No. 6 Tahun 2023','PP No. 35 Tahun 2021 (PKWT, alih daya, waktu kerja, PHK)','UU No. 2 Tahun 2004 tentang Penyelesaian Perselisihan Hubungan Industrial'],
+hk:['Menerima upah sesuai perjanjian dan ketentuan','Perlindungan jaminan sosial','PHK harus mengikuti prosedur dan hak yang timbul harus dibayar sesuai aturan'],
+l:['Kumpulkan perjanjian kerja, slip gaji, surat PHK, dan bukti kerja','Selesaikan lewat perundingan bipartit','Bila gagal, ajukan mediasi ke Dinas Ketenagakerjaan','Tempuh Pengadilan Hubungan Industrial bila tetap tidak selesai'],
+lem:['Dinas Ketenagakerjaan kabupaten/kota','Serikat pekerja','BPJS Ketenagakerjaan','Pengadilan Hubungan Industrial']},
+{id:'waris',ic:'📜',t:'Warisan dan Harta Keluarga',d:'Pembagian warisan, ahli waris, dan sengketa harta peninggalan.',
+p:'Pewarisan terjadi karena kematian (KUH Perdata Pasal 830). Aturan yang dipakai dapat berbeda: hukum perdata, hukum Islam, atau hukum adat.',
+b:['Pembagian harta peninggalan','Penentuan ahli waris','Sengketa wasiat atau hibah','Penguasaan harta waris oleh sebagian ahli waris'],
+h:['KUH Perdata Buku II tentang Pewarisan, mulai Pasal 830','Kompilasi Hukum Islam (Inpres 1/1991) Buku II, bagi yang beragama Islam','Hukum adat setempat, bila berlaku'],
+hk:['Ahli waris yang sah berhak atas bagian sesuai hukum yang berlaku','Berhak meminta pembagian dan penetapan ahli waris melalui pengadilan'],
+l:['Siapkan akta kematian, KK, dokumen kepemilikan harta','Musyawarahkan pembagian dalam keluarga','Minta surat keterangan waris atau penetapan ahli waris','Ajukan ke Pengadilan Agama (Islam) atau Pengadilan Negeri bila sengketa'],
+lem:['Pengadilan Agama / Pengadilan Negeri','Notaris','Kelurahan/desa']},
+{id:'lain',ic:'💬',t:'Permasalahan Hukum Lainnya',d:'Masalah hukum yang belum masuk kategori di atas.',
+p:'Jika belum yakin masalah Anda termasuk kategori mana, pilih ini dan ceritakan apa adanya. Pengacara akan membantu memilah.',
+b:['Masalah hukum yang belum jelas jenisnya','Ingin tahu apakah suatu masalah bisa dibawa ke jalur hukum'],
+h:['UU No. 16 Tahun 2011 tentang Bantuan Hukum','UU No. 18 Tahun 2003 tentang Advokat'],
+hk:['Orang yang tidak mampu berhak atas bantuan hukum cuma-cuma melalui pemberi bantuan hukum terakreditasi','Berhak mendapatkan informasi dan pendampingan hukum'],
+l:['Tuliskan kronologi singkat','Kumpulkan dokumen terkait','Ceritakan melalui formulir atau hubungi lewat WhatsApp'],
+lem:['Posbakum pengadilan','LBH / organisasi bantuan hukum','Ombudsman RI untuk keluhan pelayanan publik']}];
+const sec=(t,a)=>`<h2>${t}</h2><ul>${a.map(i=>`<li>${i}</li>`).join('')}</ul>`;
+const home=()=>app.innerHTML=`<section class="hero"><h1>sini<span>Cerita</span></h1><p style="font-size:22px">Setiap cerita memiliki hak untuk didengar. Sampaikan permasalahan hukum Anda dengan aman dan mudah.</p><p>Pendamping hukum: <b>Ferdy Hamzah Supit, S.H., M.H.</b></p><p>Pilih kategori permasalahan, lalu ceritakan kejadiannya dengan bahasa Anda sendiri. Tidak perlu memakai istilah hukum.</p><a class="btn" href="#/kategori">Laporkan Permasalahan</a> <a class="btn o" href="#/kategori/info">Pelajari Informasi Hukum</a> <a class="btn wa" target="_blank" rel="noopener" href="${waUrl(WA,WAHI)}">Hubungi Pengacara via WhatsApp</a></section>${EMG}<div class="note">Formulir ini adalah <b>pengaduan awal</b>. Mengirim laporan tidak otomatis membentuk hubungan pengacara-klien.</div>`;
+const cats=a=>app.innerHTML=`<h1>${a?'Informasi Hukum':'Pilih Kategori Permasalahan'}</h1><p>Pilih topik yang paling sesuai dengan masalah Anda.</p><div class="grid">${K.map(k=>`<a class="card" href="#/info/${k.id}"><div style="font-size:34px">${k.ic}</div><h3>${k.t}</h3><p>${k.d}</p></a>`).join('')}</div>${EMG}`;
+function info(id){const k=K.find(x=>x.id===id);if(!k)return cats();
+app.innerHTML=`<a href="#/kategori">← Semua kategori</a><h1>${k.ic} ${k.t}</h1>${EMG}<h2>Pengertian</h2><p>${k.p}</p>${sec('Bentuk atau contoh masalah',k.b)}${sec('Dasar hukum',k.h)}${sec('Hak-hak Anda',k.hk)}${sec('Langkah umum yang dapat dipertimbangkan',k.l)}${sec('Lembaga yang dapat membantu',k.lem)}${DISC}<a class="btn" href="#/lapor/${k.id}">Ceritakan Permasalahan Anda</a> <a class="btn wa" target="_blank" rel="noopener" href="${waUrl(WA,WAHI)}">Tanya via WhatsApp</a>`}
+function form(id){const k=K.find(x=>x.id===id)||K[7];
+app.innerHTML=`<a href="#/info/${k.id}">← Kembali ke informasi</a><h1>Ceritakan Permasalahan Anda</h1>${EMG}<form id="f" novalidate>
+<label>Nama lengkap (opsional)<input name="nama" maxlength="100" autocomplete="name"></label>
+<label>Nomor WhatsApp (opsional)<input name="wa" maxlength="20" inputmode="tel" autocomplete="tel" placeholder="08xxxxxxxxxx"></label>
+<label>Kategori permasalahan<select name="kategori">${K.map(x=>`<option${x.id===k.id?' selected':''}>${x.t}</option>`).join('')}</select></label>
+<label>Lokasi kejadian (opsional)<input name="lokasi" maxlength="200"></label>
+<label>Kapan kejadian berlangsung (opsional)<input name="waktu" maxlength="100" placeholder="Contoh: Maret 2026, atau sejak 2 tahun lalu"></label>
+<label>Ceritakan permasalahan Anda (wajib)<textarea name="cerita" maxlength="10000" placeholder="Ceritakan apa yang terjadi menggunakan bahasa Anda sendiri. Tidak perlu menggunakan bahasa hukum. Tuliskan kejadian yang ingin Anda sampaikan secara jelas."></textarea></label>
+<input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+<div class="note"><b>Pemberitahuan privasi:</b> Hanya isian di atas yang disimpan. Laporan hanya dapat dibaca oleh pengacara, tidak ditampilkan ke publik. Ini pengaduan awal dan tidak otomatis membentuk hubungan pengacara-klien. Permintaan penghapusan data dapat disampaikan lewat WhatsApp dengan menyebut kode laporan. <a href="#/privasi">Selengkapnya</a></div>
+<label class="ck"><input type="checkbox" name="setuju"> <span>Saya mengerti dan menyetujui pemberitahuan privasi di atas.</span></label>
+<p id="m" class="err" role="alert"></p><button class="btn d" id="go">Kirim Laporan</button></form>`;
+$('#f').onsubmit=send}
+async function send(e){e.preventDefault();const f=e.target,d=Object.fromEntries(new FormData(f)),m=$('#m');m.textContent='';
+if(d.cerita.trim().length<20)return m.textContent='Cerita wajib diisi, minimal 20 karakter.';
+if(!d.setuju)return m.textContent='Centang persetujuan privasi terlebih dahulu.';
+if(d.website)return done('SC-00000000');
+if(!sb)return m.textContent='Layanan penyimpanan belum diaktifkan oleh pengelola situs, sehingga laporan belum dapat dikirim. Silakan hubungi pengacara lewat WhatsApp.';
+const b=$('#go');b.disabled=true;b.textContent='Mengirim…';
+const{data,error}=await sb.rpc('submit_report',{p_nama:d.nama.trim()||null,p_wa:d.wa.trim()||null,p_kategori:d.kategori,p_lokasi:d.lokasi.trim()||null,p_waktu:d.waktu.trim()||null,p_cerita:d.cerita.trim()});
+if(error){b.disabled=false;b.textContent='Kirim Laporan';return m.textContent='Laporan gagal dikirim. Periksa koneksi lalu coba lagi.'}
+done(data)}
+const done=k=>app.innerHTML=`<div class="ok"><h1>Laporan Anda sudah terkirim</h1><p>Simpan kode laporan Anda:</p><p class="kode">${esc(k)}</p><p>Pengacara akan meninjau laporan Anda. Bila Anda mengisi nomor WhatsApp, Anda dapat dihubungi melalui nomor tersebut. Pengiriman laporan tidak otomatis membentuk hubungan pengacara-klien.</p></div>${EMG}<a class="btn" href="#/">Kembali ke Beranda</a>`;
+const priv=()=>app.innerHTML=`<h1>Kebijakan Privasi</h1><ul><li>Data yang dikumpulkan hanya yang Anda isi di formulir: nama, nomor WhatsApp, lokasi, waktu, dan cerita. Semua kecuali cerita bersifat opsional.</li><li>Data dipakai hanya untuk meninjau dan menindaklanjuti laporan Anda.</li><li>Laporan hanya dapat dibaca oleh pengacara melalui akun admin; tidak ditampilkan kepada publik.</li><li>Cerita tidak dikirim lewat tautan atau parameter URL.</li><li>Untuk meminta penghapusan data, hubungi pengacara lewat WhatsApp dan sebutkan kode laporan Anda.</li><li>Notifikasi laporan baru kepada pengacara hanya memuat kode laporan, bukan isi cerita.</li><li>Pengiriman laporan adalah pengaduan awal dan tidak otomatis membentuk hubungan pengacara-klien.</li></ul>${EMG}`;
+/* ADMIN */
+const ST={baru:'Baru',ditinjau:'Sedang Ditinjau',penanganan:'Dalam Penanganan',selesai:'Selesai'};let ALL=[];
+const wn=n=>{n=(n||'').replace(/\D/g,'');if(n[0]==='0')n='62'+n.slice(1);else if(n[0]==='8')n='62'+n;return n.length>=10?n:''};
+function login(msg){app.innerHTML=`<h1>Masuk Pengacara</h1><form id="lf"><label>Email<input name="e" type="email" autocomplete="username" required></label><label>Kata sandi<input name="p" type="password" autocomplete="current-password" required></label><p class="err" id="lm">${esc(msg||'')}</p><button class="btn d">Masuk</button></form>`;
+$('#lf').onsubmit=async e=>{e.preventDefault();const{error}=await sb.auth.signInWithPassword({email:e.target.e.value,password:e.target.p.value});if(error)return $('#lm').textContent='Email atau kata sandi salah.';admin()}}
+async function admin(){if(!sb)return app.innerHTML='<h1>Dashboard</h1><p class="err">Database belum dikonfigurasi. Isi config.js sesuai panduan README.</p>';
+const{data:{session}}=await sb.auth.getSession();if(!session)return login();
+const{data:ok}=await sb.rpc('is_admin');if(!ok){await sb.auth.signOut();return login('Akun ini tidak memiliki akses admin.')}
+app.innerHTML=`<h1>Dashboard Pengacara</h1><div class="tools"><input id="q" placeholder="Cari nama, kode, lokasi, cerita…"><select id="fk"><option value="">Semua kategori</option>${K.map(k=>`<option>${k.t}</option>`).join('')}</select><select id="fs"><option value="">Semua status</option>${Object.entries(ST).map(([v,l])=>`<option value="${v}">${l}</option>`).join('')}</select><button class="btn d" id="out">Keluar</button></div><p id="cnt"></p><div id="list">Memuat…</div>`;
+$('#out').onclick=async()=>{await sb.auth.signOut();admin()};
+const{data,error}=await sb.from('reports').select('*').order('created_at',{ascending:false});
+if(error)return $('#list').textContent='Gagal memuat: '+error.message;ALL=data;['q','fk','fs'].forEach(i=>$('#'+i).oninput=draw);
+$('#list').onchange=async e=>{const id=e.target.dataset.id;if(!id)return;const{error}=await sb.from('reports').update({status:e.target.value}).eq('id',id);if(error)return alert('Gagal mengubah status.');ALL.find(r=>r.id===id).status=e.target.value};
+$('#list').onclick=async e=>{const id=e.target.dataset.del;if(!id)return;const r=ALL.find(x=>x.id===id);if(!confirm('Hapus laporan '+r.kode+' secara permanen?'))return;const{error}=await sb.from('reports').delete().eq('id',id);if(error)return alert('Gagal menghapus.');ALL=ALL.filter(x=>x.id!==id);draw()};draw()}
+function draw(){const q=$('#q').value.toLowerCase(),k=$('#fk').value,s=$('#fs').value;
+const L=ALL.filter(r=>(!k||r.kategori===k)&&(!s||r.status===s)&&(!q||[r.kode,r.nama,r.cerita,r.lokasi,r.wa].join(' ').toLowerCase().includes(q)));$('#cnt').textContent=L.length+' laporan';
+$('#list').innerHTML=L.length?L.map(r=>{const n=wn(r.wa);return`<details class="card"><summary><b>${esc(r.kode)}</b> · ${esc(r.kategori)} · ${new Date(r.created_at).toLocaleString('id-ID')} <span class="tag">${ST[r.status]}</span></summary><p><b>Nama:</b> ${esc(r.nama||'-')}<br><b>WhatsApp:</b> ${esc(r.wa||'-')}<br><b>Lokasi:</b> ${esc(r.lokasi||'-')}<br><b>Waktu kejadian:</b> ${esc(r.waktu||'-')}</p><p style="white-space:pre-wrap">${esc(r.cerita)}</p><select data-id="${r.id}" aria-label="Status">${Object.entries(ST).map(([v,l])=>`<option value="${v}"${v===r.status?' selected':''}>${l}</option>`).join('')}</select>${n?`<a class="btn wa" target="_blank" rel="noopener" href="${waUrl(n,'Halo, kami dari siniCerita menindaklanjuti laporan '+r.kode+'.')}">Buka WhatsApp</a>`:''}<button class="btn d" data-del="${r.id}">Hapus</button></details>`}).join(''):'<p>Belum ada laporan yang cocok.</p>'}
+const R={'':home,kategori:cats,info,lapor:form,privasi:priv,admin};
+function route(){const[p,a]=location.hash.replace(/^#\/?/,'').split('/');(Object.hasOwn(R,p||'')?R[p||'']:home)(a);scrollTo(0,0)}
+addEventListener('hashchange',route);route();
+</script></body></html>
