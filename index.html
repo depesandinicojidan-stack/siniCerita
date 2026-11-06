@@ -119,6 +119,67 @@ const b=$('#go');b.disabled=true;b.textContent='Mengirim…';
 const{data,error}=await sb.rpc('submit_report',{p_nama:d.nama.trim()||null,p_wa:d.wa.trim()||null,p_kategori:d.kategori,p_lokasi:d.lokasi.trim()||null,p_waktu:d.waktu.trim()||null,p_cerita:d.cerita.trim()});
 if(error){b.disabled=false;b.textContent='Kirim Laporan';return m.textContent='Laporan gagal dikirim. Periksa koneksi lalu coba lagi.'}
 done(data)}
+const done=k=>app.innerHTML=`<div class="ok"><h1>Laporan Anda sudah terkirim</h1><p>Simpan kode laporan Anda:</p><p class="kode">${esc(k)}</p><p>Pengacara akan meninjau laporan Anda. Bila Anda mengisi nomor WhatsApp, Anda dapat dihubungi melalui nomor tersebut. Pengiriman laporan tidak otomatis membentuk hubungan pengacara-klien.</p></div>${EMG}<a cp:'Hukum perdata mengatur hubungan hukum antarpribadi, misalnya perjanjian, utang piutang, dan ganti rugi.',
+b:['Utang piutang yang tidak dibayar','Perjanjian yang tidak dipenuhi (wanprestasi)','Kerugian akibat perbuatan melawan hukum'],
+h:['KUH Perdata Pasal 1320 (syarat sahnya perjanjian)','KUH Perdata Pasal 1243 (ganti rugi bila perjanjian tidak dipenuhi)','KUH Perdata Pasal 1365 (perbuatan melawan hukum)','Perma No. 1 Tahun 2016 tentang Prosedur Mediasi di Pengadilan','Perma No. 4 Tahun 2019 (gugatan sederhana)'],
+hk:['Hak menagih dan menuntut pemenuhan perjanjian','Hak menuntut ganti rugi atas kerugian','Hak menempuh mediasi atau gugatan ke pengadilan'],
+l:['Kumpulkan perjanjian, kuitansi, bukti transfer, percakapan','Sampaikan teguran tertulis (somasi) bila perlu','Coba penyelesaian secara musyawarah','Ajukan gugatan ke Pengadilan Negeri; perkara kecil dapat memakai gugatan sederhana'],
+lem:['Pengadilan Negeri setempat','Posbakum / LBH','Lembaga mediasi dan notaris']},
+{id:'tanah',ic:'🏡',t:'Sengketa Tanah dan Properti',d:'Batas tanah, sertifikat ganda, jual beli, dan penguasaan lahan.',
+p:'Sengketa tanah adalah perselisihan mengenai kepemilikan, batas, penguasaan, atau dokumen tanah dan bangunan.',
+b:['Sengketa batas atau penyerobotan tanah','Sertifikat ganda atau dokumen dipersoalkan','Masalah jual beli tanah dan akta','Penguasaan tanah oleh pihak lain'],
+h:['UU No. 5 Tahun 1960 tentang Peraturan Dasar Pokok-Pokok Agraria (UUPA)','PP No. 18 Tahun 2021 (hak atas tanah dan pendaftaran tanah); PP 24/1997 sepanjang masih berlaku','UU No. 2 Tahun 2012 tentang Pengadaan Tanah untuk Kepentingan Umum','Perma No. 1 Tahun 2016 (mediasi)'],
+hk:['Hak atas tanah yang sah dilindungi hukum','Hak meminta penyelesaian melalui BPN atau pengadilan','Hak atas ganti rugi yang layak bila tanah diambil untuk kepentingan umum'],
+l:['Kumpulkan sertifikat/girik/akta jual beli, PBB, dan peta bidang','Cek status tanah di Kantor Pertanahan (BPN)','Coba musyawarah dan mediasi','Ajukan pengaduan ke BPN atau gugatan ke Pengadilan Negeri','Hindari tindakan fisik di lokasi'],
+lem:['Kantor Pertanahan (BPN) setempat','Notaris / PPAT','Pengadilan Negeri','Pemerintah desa/kelurahan']},
+{id:'kerja',ic:'👷',t:'Ketenagakerjaan',d:'Upah, PHK, pesangon, dan hak pekerja.',
+p:'Hukum ketenagakerjaan mengatur hubungan antara pekerja dan pemberi kerja, termasuk upah, jam kerja, jaminan sosial, dan pemutusan hubungan kerja (PHK).',
+b:['Upah tidak dibayar atau di bawah ketentuan','PHK sepihak atau pesangon tidak dibayar','Status kerja kontrak (PKWT) atau alih daya','Hak BPJS dan cuti'],
+h:['UU No. 13 Tahun 2003 tentang Ketenagakerjaan, sebagaimana diubah dengan UU No. 6 Tahun 2023','PP No. 35 Tahun 2021 (PKWT, alih daya, waktu kerja, PHK)','UU No. 2 Tahun 2004 tentang Penyelesaian Perselisihan Hubungan Industrial'],
+hk:['Menerima upah sesuai perjanjian dan ketentuan','Perlindungan jaminan sosial','PHK harus mengikuti prosedur dan hak yang timbul harus dibayar sesuai aturan'],
+l:['Kumpulkan perjanjian kerja, slip gaji, surat PHK, dan bukti kerja','Selesaikan lewat perundingan bipartit','Bila gagal, ajukan mediasi ke Dinas Ketenagakerjaan','Tempuh Pengadilan Hubungan Industrial bila tetap tidak selesai'],
+lem:['Dinas Ketenagakerjaan kabupaten/kota','Serikat pekerja','BPJS Ketenagakerjaan','Pengadilan Hubungan Industrial']},
+{id:'waris',ic:'📜',t:'Warisan dan Harta Keluarga',d:'Pembagian warisan, ahli waris, dan sengketa harta peninggalan.',
+p:'Pewarisan terjadi karena kematian (KUH Perdata Pasal 830). Aturan yang dipakai dapat berbeda: hukum perdata, hukum Islam, atau hukum adat.',
+b:['Pembagian harta peninggalan','Penentuan ahli waris','Sengketa wasiat atau hibah','Penguasaan harta waris oleh sebagian ahli waris'],
+h:['KUH Perdata Buku II tentang Pewarisan, mulai Pasal 830','Kompilasi Hukum Islam (Inpres 1/1991) Buku II, bagi yang beragama Islam','Hukum adat setempat, bila berlaku'],
+hk:['Ahli waris yang sah berhak atas bagian sesuai hukum yang berlaku','Berhak meminta pembagian dan penetapan ahli waris melalui pengadilan'],
+l:['Siapkan akta kematian, KK, dokumen kepemilikan harta','Musyawarahkan pembagian dalam keluarga','Minta surat keterangan waris atau penetapan ahli waris','Ajukan ke Pengadilan Agama (Islam) atau Pengadilan Negeri bila sengketa'],
+lem:['Pengadilan Agama / Pengadilan Negeri','Notaris','Kelurahan/desa']},
+{id:'lain',ic:'💬',t:'Permasalahan Hukum Lainnya',d:'Masalah hukum yang belum masuk kategori di atas.',
+p:'Jika belum yakin masalah Anda termasuk kategori mana, pilih ini dan ceritakan apa adanya. Pengacara akan membantu memilah.',
+b:['Masalah hukum yang belum jelas jenisnya','Ingin tahu apakah suatu masalah bisa dibawa ke jalur hukum'],
+h:['UU No. 16 Tahun 2011 tentang Bantuan Hukum','UU No. 18 Tahun 2003 tentang Advokat'],
+hk:['Orang yang tidak mampu berhak atas bantuan hukum cuma-cuma melalui pemberi bantuan hukum terakreditasi','Berhak mendapatkan informasi dan pendampingan hukum'],
+l:['Tuliskan kronologi singkat','Kumpulkan dokumen terkait','Ceritakan melalui formulir atau hubungi lewat WhatsApp'],
+lem:['Posbakum pengadilan','LBH / organisasi bantuan hukum','Ombudsman RI untuk keluhan pelayanan publik']}];
+const sec=(t,a)=>`<h2>${t}</h2><ul>${a.map(i=>`<li>${i}</li>`).join('')}</ul>`;
+const home=()=>app.innerHTML=`<section class="hero"><h1>sini<span>Cerita</span></h1><p style="font-size:22px">Setiap cerita memiliki hak untuk didengar. Sampaikan permasalahan hukum Anda dengan aman dan mudah.</p><p>Pendamping hukum: <b>Ferdy Hamzah Supit, S.H., M.H.</b></p><p>Pilih kategori permasalahan, lalu ceritakan kejadiannya dengan bahasa Anda sendiri. Tidak perlu memakai istilah hukum.</p><a class="btn" href="#/kategori">Laporkan Permasalahan</a> <a class="btn o" href="#/kategori/info">Pelajari Informasi Hukum</a> <a class="btn wa" target="_blank" rel="noopener" href="${waUrl(WA,WAHI)}">Hubungi Pengacara via WhatsApp</a></section>${EMG}<div class="note">Formulir ini adalah <b>pengaduan awal</b>. Mengirim laporan tidak otomatis membentuk hubungan pengacara-klien.</div>`;
+const cats=a=>app.innerHTML=`<h1>${a?'Informasi Hukum':'Pilih Kategori Permasalahan'}</h1><p>Pilih topik yang paling sesuai dengan masalah Anda.</p><div class="grid">${K.map(k=>`<a class="card" href="#/info/${k.id}"><div style="font-size:34px">${k.ic}</div><h3>${k.t}</h3><p>${k.d}</p></a>`).join('')}</div>${EMG}`;
+function info(id){const k=K.find(x=>x.id===id);if(!k)return cats();
+app.innerHTML=`<a href="#/kategori">← Semua kategori</a><h1>${k.ic} ${k.t}</h1>${EMG}<h2>Pengertian</h2><p>${k.p}</p>${sec('Bentuk atau contoh masalah',k.b)}${sec('Dasar hukum',k.h)}${sec('Hak-hak Anda',k.hk)}${sec('Langkah umum yang dapat dipertimbangkan',k.l)}${sec('Lembaga yang dapat membantu',k.lem)}${DISC}<a class="btn" href="#/lapor/${k.id}">Ceritakan Permasalahan Anda</a> <a class="btn wa" target="_blank" rel="noopener" href="${waUrl(WA,WAHI)}">Tanya via WhatsApp</a>`}
+function form(id){const k=K.find(x=>x.id===id)||K[7];
+app.innerHTML=`<a href="#/info/${k.id}">← Kembali ke informasi</a><h1>Ceritakan Permasalahan Anda</h1>${EMG}<form id="f" novalidate>
+<label>Nama lengkap (opsional)<input name="nama" maxlength="100" autocomplete="name"></label>
+<label>Nomor WhatsApp (opsional)<input name="wa" maxlength="20" inputmode="tel" autocomplete="tel" placeholder="08xxxxxxxxxx"></label>
+<label>Kategori permasalahan<select name="kategori">${K.map(x=>`<option${x.id===k.id?' selected':''}>${x.t}</option>`).join('')}</select></label>
+<label>Lokasi kejadian (opsional)<input name="lokasi" maxlength="200"></label>
+<label>Kapan kejadian berlangsung (opsional)<input name="waktu" maxlength="100" placeholder="Contoh: Maret 2026, atau sejak 2 tahun lalu"></label>
+<label>Ceritakan permasalahan Anda (wajib)<textarea name="cerita" maxlength="10000" placeholder="Ceritakan apa yang terjadi menggunakan bahasa Anda sendiri. Tidak perlu menggunakan bahasa hukum. Tuliskan kejadian yang ingin Anda sampaikan secara jelas."></textarea></label>
+<input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+<div class="note"><b>Pemberitahuan privasi:</b> Hanya isian di atas yang disimpan. Laporan hanya dapat dibaca oleh pengacara, tidak ditampilkan ke publik. Ini pengaduan awal dan tidak otomatis membentuk hubungan pengacara-klien. Permintaan penghapusan data dapat disampaikan lewat WhatsApp dengan menyebut kode laporan. <a href="#/privasi">Selengkapnya</a></div>
+<label class="ck"><input type="checkbox" name="setuju"> <span>Saya mengerti dan menyetujui pemberitahuan privasi di atas.</span></label>
+<p id="m" class="err" role="alert"></p><button class="btn d" id="go">Kirim Laporan</button></form>`;
+$('#f').onsubmit=send}
+async function send(e){e.preventDefault();const f=e.target,d=Object.fromEntries(new FormData(f)),m=$('#m');m.textContent='';
+if(d.cerita.trim().length<20)return m.textContent='Cerita wajib diisi, minimal 20 karakter.';
+if(!d.setuju)return m.textContent='Centang persetujuan privasi terlebih dahulu.';
+if(d.website)return done('SC-00000000');
+if(!sb)return m.textContent='Layanan penyimpanan belum diaktifkan oleh pengelola situs, sehingga laporan belum dapat dikirim. Silakan hubungi pengacara lewat WhatsApp.';
+const b=$('#go');b.disabled=true;b.textContent='Mengirim…';
+const{data,error}=await sb.rpc('submit_report',{p_nama:d.nama.trim()||null,p_wa:d.wa.trim()||null,p_kategori:d.kategori,p_lokasi:d.lokasi.trim()||null,p_waktu:d.waktu.trim()||null,p_cerita:d.cerita.trim()});
+if(error){b.disabled=false;b.textContent='Kirim Laporan';return m.textContent='Laporan gagal dikirim. Periksa koneksi lalu coba lagi.'}
+done(data)}
 const done=k=>app.innerHTML=`<div class="ok"><h1>Laporan Anda sudah terkirim</h1><p>Simpan kode laporan Anda:</p><p class="kode">${esc(k)}</p><p>Pengacara akan meninjau laporan Anda. Bila Anda mengisi nomor WhatsApp, Anda dapat dihubungi melalui nomor tersebut. Pengiriman laporan tidak otomatis membentuk hubungan pengacara-klien.</p></div>${EMG}<a class="btn" href="#/">Kembali ke Beranda</a>`;
 const priv=()=>app.innerHTML=`<h1>Kebijakan Privasi</h1><ul><li>Data yang dikumpulkan hanya yang Anda isi di formulir: nama, nomor WhatsApp, lokasi, waktu, dan cerita. Semua kecuali cerita bersifat opsional.</li><li>Data dipakai hanya untuk meninjau dan menindaklanjuti laporan Anda.</li><li>Laporan hanya dapat dibaca oleh pengacara melalui akun admin; tidak ditampilkan kepada publik.</li><li>Cerita tidak dikirim lewat tautan atau parameter URL.</li><li>Untuk meminta penghapusan data, hubungi pengacara lewat WhatsApp dan sebutkan kode laporan Anda.</li><li>Notifikasi laporan baru kepada pengacara hanya memuat kode laporan, bukan isi cerita.</li><li>Pengiriman laporan adalah pengaduan awal dan tidak otomatis membentuk hubungan pengacara-klien.</li></ul>${EMG}`;
 /* ADMIN */
